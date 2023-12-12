@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Task Dashboard</h2>
+    <a href="/create_task" class="btn btn-success mb-3">Create New Task</a>
+    <div class="mb-3">
+        <form method="GET" action="/dashboard">
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" name="user">
+                        <option value="all">All Users</option>
+                        {% for user in users %}
+                        <option value="{{ user.id }}" {% if user.username == user_filter %}selected{% endif %}>{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control" name="priority">
+                        <option value="all">All Priorities</option>
+                        <option value="Low" {% if priority_filter == 'Low' %}selected{% endif %}>Low</option>
+                        <option value="Medium" {% if priority_filter == 'Medium' %}selected{% endif %}>Medium</option>
+                        <option value="High" {% if priority_filter == 'High' %}selected{% endif %}>High</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Apply Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        {% set statuses = ['Pending', 'In Progress', 'Completed'] %}
+        {% for status in statuses %}
+        <div class="col-md-4 border">
+            <h4 class="text-center mt-2">{{ status }}</h4>
+            <div class="d-flex flex-column">
+                {% for task_data in tasks %}
+                {% set task = task_data[0] %}
+                {% set assigned_username = task_data[-1] %}
+                {% if task.status == status %}
+                <a href="/task_details/{{ task.id }}" class="text-decoration-none text-dark">
+                    <div class="card m-2 border">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ task.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Priority: {{ task.priority }}</h6>
+                            <p class="card-text">{{ task.description }}</p>
+                            <p class="card-text"><small>Assigned To: {{ assigned_username }}</small></p>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

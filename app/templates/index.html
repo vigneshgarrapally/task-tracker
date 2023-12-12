@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .centered-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Adjust height as needed */
+        text-align: center;
+    }
+
+    .background {
+        background-image: url('your-background-image-url.jpg'); /* Add your background image URL here */
+        background-size: cover;
+        background-position: center;
+    }
+
+    .animated-element {
+        animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+
+<div class="background">
+    <div class="centered-content">
+        <div class="animated-element">
+            <h1 class="display-4">Welcome to TaskManager!</h1>
+            <p class="lead">An efficient solution to manage and track your tasks.</p>
+            <hr class="my-4">
+            <p>Assign tasks, set deadlines, update statuses, and collaborate effectively.</p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
